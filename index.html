@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playlist to TXT</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Playlist to TXT</h1>
+  <p class="lead">Paste a YouTube playlist link and download every video title as a text file.</p>
+
+  <label for="url">Playlist link</label>
+  <input id="url" type="text" placeholder="https://www.youtube.com/playlist?list=PL..." autocomplete="off">
+
+  <label for="key">YouTube Data API key</label>
+  <input id="key" type="password" placeholder="Paste your API key (saved in this browser only)" autocomplete="off">
+  <div class="hint">Free key: <a href="https://console.cloud.google.com/apis/library/youtube.googleapis.com" target="_blank" rel="noopener">enable YouTube Data API v3</a>, then create an API key under Credentials.</div>
+
+  <div class="opts">
+    <label><input type="checkbox" id="num" checked> Number the titles</label>
+    <label><input type="checkbox" id="urls"> Include video links</label>
+  </div>
+
+  <div class="row"><button id="go">Get video names</button></div>
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <div id="result">
+    <textarea id="out" readonly aria-label="Video titles"></textarea>
+    <div class="row">
+      <button id="dl">Download .txt</button>
+      <button id="copy" class="alt">Copy to clipboard</button>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

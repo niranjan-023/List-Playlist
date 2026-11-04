@@ -1,0 +1,143 @@
+
+# ==============================
+# OS generated files
+# ==============================
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ==============================
+# IDEs and editors
+# ==============================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.code-workspace
+
+# ==============================
+# Environment variables and secrets
+# ==============================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ==============================
+# Logs
+# ==============================
+*.log
+logs/
+
+# ==============================
+# Temporary files
+# ==============================
+*.tmp
+*.temp
+*.bak
+.cache/
+tmp/
+temp/
+
+# ==============================
+# Python
+# ==============================
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+ENV/
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+
+# ==============================
+# C / C++
+# ==============================
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+*.class
+*.pch
+*.gch
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# ==============================
+# Java
+# ==============================
+*.class
+*.jar
+*.war
+*.ear
+target/
+.gradle/
+build/
+
+# ==============================
+# Node.js
+# ==============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.npm/
+.next/
+.nuxt/
+dist/
+
+# ==============================
+# Build and distribution
+# ==============================
+out/
+release/
+debug/
+coverage/
+*.bin
+
+# ==============================
+# Testing and coverage
+# ==============================
+.coverage
+htmlcov/
+.nyc_output/
+test-results/
+
+# ==============================
+# Operating system and application data
+# ==============================
+*.pid
+*.seed
+*.stackdump
+
+# ==============================
+# Local databases
+# ==============================
+*.sqlite
+*.sqlite3
+*.db
+
+# ==============================
+# Archives
+# ==============================
+*.zip
+*.tar
+*.gz
+*.rar
