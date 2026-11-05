@@ -7,30 +7,80 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<main>
-  <h1>Playlist to TXT</h1>
-  <p class="lead">Paste a YouTube playlist link and download every video title as a text file.</p>
-
-  <label for="url">Playlist link</label>
-  <input id="url" type="text" placeholder="https://www.youtube.com/playlist?list=PL..." autocomplete="off">
-
-  <div class="opts">
-    <label><input type="checkbox" id="num" checked> Number the titles</label>
-    <label><input type="checkbox" id="urls"> Include video links</label>
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.2" fill="currentColor"/></svg>
+    <span>Playlist<b>TXT</b></span>
   </div>
+  <span class="tag">YouTube playlist exporter</span>
+</header>
 
-  <div class="row"><button id="go">Get video names</button></div>
-  <div id="status" role="status" aria-live="polite"></div>
+<main>
+  <section class="hero">
+    <div class="copy">
+      <p class="eyebrow">For listeners who keep a library</p>
+      <h1>Every track in your playlist, in one clean text file.</h1>
+      <p class="lead">Paste a YouTube playlist link to export all video titles. Keep it as a backup, share it with a friend, or drop it into your notes.</p>
 
-  <div id="result">
-    <textarea id="out" readonly aria-label="Video titles"></textarea>
-    <div class="row">
+      <label for="url">Playlist link</label>
+      <div class="field">
+        <input id="url" type="text" placeholder="https://www.youtube.com/playlist?list=PL..." autocomplete="off">
+        <button id="go">Get video names</button>
+      </div>
+
+      <div class="opts">
+        <label class="chip"><input type="checkbox" id="num" checked><span>Number the titles</span></label>
+        <label class="chip"><input type="checkbox" id="urls"><span>Include video links</span></label>
+      </div>
+      <div id="status" role="status" aria-live="polite"></div>
+    </div>
+
+    <div class="art" aria-hidden="true">
+      <svg class="deck" viewBox="0 0 360 360">
+        <defs>
+          <radialGradient id="vg" cx="50%" cy="50%" r="50%">
+            <stop offset="0" stop-color="#2a2623"/><stop offset="1" stop-color="#0d0c0b"/>
+          </radialGradient>
+        </defs>
+        <circle cx="180" cy="180" r="172" fill="#1c1a18" stroke="#2c2926"/>
+        <g class="disc">
+          <circle cx="180" cy="180" r="150" fill="url(#vg)"/>
+          <g fill="none" stroke="#fff" stroke-opacity=".07">
+            <circle cx="180" cy="180" r="140"/><circle cx="180" cy="180" r="128"/><circle cx="180" cy="180" r="116"/>
+            <circle cx="180" cy="180" r="104"/><circle cx="180" cy="180" r="92"/><circle cx="180" cy="180" r="80"/>
+          </g>
+          <path d="M180 30 A150 150 0 0 1 330 180" fill="none" stroke="#fff" stroke-opacity=".08" stroke-width="22"/>
+          <circle cx="180" cy="180" r="52" fill="#e0a43a"/>
+          <circle cx="180" cy="180" r="44" fill="none" stroke="#14110e" stroke-opacity=".35"/>
+          <circle cx="180" cy="180" r="7" fill="#14110e"/>
+        </g>
+        <g class="arm">
+          <circle cx="322" cy="48" r="16" fill="#2c2926" stroke="#3a3632"/>
+          <path d="M322 48 L246 238" stroke="#8d867d" stroke-width="5" stroke-linecap="round"/>
+          <rect x="232" y="232" width="22" height="34" rx="4" transform="rotate(-20 243 249)" fill="#cfc8bd"/>
+        </g>
+      </svg>
+      <div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+
+  <section id="result" class="panel">
+    <div class="panel-head">
+      <div>
+        <h2 id="plname">Playlist</h2>
+        <p id="count"></p>
+      </div>
+      <input id="filter" type="text" placeholder="Filter tracks" aria-label="Filter tracks" autocomplete="off">
+    </div>
+    <ol id="list" class="tracks"></ol>
+    <div class="actions">
       <button id="dl">Download .txt</button>
       <button id="copy" class="alt">Copy to clipboard</button>
     </div>
-  </div>
+  </section>
 </main>
 
+<footer>Titles are fetched through the YouTube Data API. Your API key stays on the server.</footer>
 <script src="script.js"></script>
 </body>
 </html>

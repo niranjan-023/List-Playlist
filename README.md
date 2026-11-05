@@ -4,7 +4,9 @@ Paste a YouTube playlist link and download every video title as a `.txt` file. T
 
 ## Features
 
+- Glassy, music-inspired UI: animated equalizer, floating colour orbs and a cursor-following glow
 - Get every video title from a playlist of any length
+- Scrollable track list with a live filter and an "Open" link per video
 - Skips private and deleted videos
 - Optional numbering and video links
 - Download as `.txt` or copy to clipboard
@@ -15,7 +17,7 @@ Paste a YouTube playlist link and download every video title as a `.txt` file. T
 ```
 index.html     # page structure
 style.css      # styling
-script.js      # front-end logic
+script.js      # front-end logic (track list, filter, download, copy)
 server.js      # Node/Express server, reads .env and calls YouTube
 package.json   # dependencies
 .env.example   # template for your secret key
@@ -65,12 +67,6 @@ Open **http://localhost:3000**, paste a playlist link, and click **Get video nam
 | "API key not valid" | Re-copy the key and check that YouTube Data API v3 is enabled for the project. |
 | "Playlist not found" | The playlist must be public or unlisted. |
 | Quota exceeded | The free quota is 10,000 units per day. Each page of 50 videos costs about 1 unit. Try again tomorrow. |
-
-## Security
-
-- **Never commit `.env`.** It is already listed in `.gitignore`.
-- If you ever leak your key, delete it in Google Cloud Console and create a new one.
-- The server only serves `index.html`, `style.css` and `script.js`, so `.env` can't be downloaded.
 
 ## Tech
 
