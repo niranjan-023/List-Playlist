@@ -1,6 +1,8 @@
 const $ = id => document.getElementById(id);
 let plTitle = "playlist";
 let items = [];
+let lastLink = "";
+let audioOk = false;
 
 function setStatus(msg, isErr){ const s=$("status"); s.textContent=msg; s.className=isErr?"err":""; }
 const videoUrl = id => "https://www.youtube.com/watch?v=" + id;
@@ -58,6 +60,8 @@ async function run(){
   document.body.classList.remove("busy");
 
   items = data.videos;
+  lastLink = link;
+  resetAudio();
   plTitle = data.title || "playlist";
   if (!items.length) return setStatus("No public videos found in this playlist.", true);
 
@@ -86,4 +90,107 @@ $("dl").addEventListener("click", () => {
 $("copy").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(buildText()); setStatus("Copied to clipboard."); }
   catch(e){ setStatus("Couldn't access the clipboard. Use Download .txt instead.", true); }
+});
+
+/* ================= MP3 .zip export ================= */
+let jobId = null, pollTimer = null, pollFails = 0;
+
+function aNote(html, isErr){ const n=$("anote"); n.innerHTML = html; n.className = "anote" + (isErr ? " err" : ""); }
+function esc(t){ const d=document.createElement("div"); d.textContent=t; return d.innerHTML; }
+
+function resetAudio(){
+  clearTimeout(pollTimer); jobId = null;
+  $("audio").classList.remove("on");
+  $("afill").style.width = "0";
+  $("mp3").disabled = !audioOk;
+  $("bitrate").disabled = !audioOk;
+  aNote(audioOk ? "" : "MP3 export isn't available: the server needs yt-dlp and ffmpeg installed (see the README).", !audioOk);
+}
+
+fetch("/api/capabilities").then(r => r.json()).then(c => {
+  audioOk = !!c.audio;
+  if (items.length) resetAudio();
+}).catch(() => { audioOk = false; });
+
+function stopAudio(){
+  clearTimeout(pollTimer);
+  $("mp3").disabled = false; $("bitrate").disabled = false;
+  $("audio").classList.remove("on");
+  document.body.classList.remove("busy");
+}
+
+async function startMp3(){
+  if (!lastLink || !items.length) return;
+  $("mp3").disabled = true; $("bitrate").disabled = true;
+  aNote("");
+  $("afill").style.width = "0";
+  $("astatus").textContent = "Starting export…";
+  $("acancel").disabled = false;
+  $("audio").classList.add("on");
+  document.body.classList.add("busy");
+  try {
+    const r = await fetch("/api/audio/start", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ url: lastLink, bitrate: +$("bitrate").value, numbered: $("num").checked })
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "Request failed (" + r.status + ")");
+    jobId = d.id; pollFails = 0;
+    poll();
+  } catch(e){
+    stopAudio();
+    aNote("Couldn't start the export: " + esc(e.message), true);
+  }
+}
+
+async function poll(){
+  if (!jobId) return;
+  try {
+    const r = await fetch("/api/audio/" + jobId);
+    const s = await r.json();
+    if (!r.ok) throw new Error(s.error || "Request failed (" + r.status + ")");
+    pollFails = 0;
+
+    const pct = s.total ? Math.round(s.done / s.total * 100) : 0;
+    $("afill").style.width = pct + "%";
+
+    if (s.status === "running"){
+      const cur = s.current.length ? " · " + s.current[0] : "";
+      $("astatus").textContent = "Converting " + s.done + " / " + s.total + cur;
+      pollTimer = setTimeout(poll, 1000);
+      return;
+    }
+
+    const id = jobId; jobId = null;
+    stopAudio();
+    if (s.status === "done"){
+      const skipped = s.failed ? " " + s.failed + " track" + (s.failed === 1 ? "" : "s") + " skipped." : "";
+      aNote("ZIP ready with " + s.ok + " MP3" + (s.ok === 1 ? "" : "s") + "." + skipped +
+        ' If the download didn\'t start, <a href="/api/audio/' + id + '/download">save it here</a>.');
+      const a = document.createElement("a");
+      a.href = "/api/audio/" + id + "/download";
+      document.body.appendChild(a); a.click(); a.remove();
+      setStatus("Your MP3 .zip is downloading.");
+    } else if (s.status === "cancelled"){
+      aNote("Export cancelled.");
+    } else {
+      aNote("Export failed: " + esc(s.error || "unknown error"), true);
+    }
+  } catch(e){
+    if (++pollFails < 4){ pollTimer = setTimeout(poll, 1500); return; }
+    jobId = null; stopAudio();
+    aNote("Lost contact with the server: " + esc(e.message), true);
+  }
+}
+
+$("mp3").addEventListener("click", startMp3);
+$("acancel").addEventListener("click", async () => {
+  if (!jobId) return;
+  const id = jobId; jobId = null;
+  clearTimeout(pollTimer);
+  $("acancel").disabled = true;
+  try { await fetch("/api/audio/" + id, { method: "DELETE" }); } catch(e){}
+  stopAudio();
+  aNote("Export cancelled.");
 });

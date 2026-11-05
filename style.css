@@ -78,3 +78,20 @@ footer{padding:22px 24px;text-align:center;color:#6f685f;font-size:.82rem;border
 }
 @media (max-width:480px){.field{flex-direction:column}button{width:100%}.actions button{width:auto;flex:1}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---- MP3 export ---- */
+button.small{height:34px;padding:0 14px;font-size:.85rem}
+select{height:48px;padding:0 14px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:500 .92rem inherit;cursor:pointer;transition:border-color .15s,box-shadow .15s}
+select:hover{border-color:#4a443e}
+select:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(224,164,58,.25)}
+select:disabled{opacity:.55;cursor:not-allowed}
+.audio{display:none;margin-top:18px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.audio.on{display:block;animation:rise .3s ease both}
+.audio-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}
+#astatus{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.9rem;color:var(--muted)}
+.meter{height:6px;border-radius:3px;background:var(--surface-2);overflow:hidden}
+.meter i{display:block;height:100%;width:0;border-radius:3px;background:var(--accent);transition:width .4s ease}
+.anote{margin:12px 0 0;min-height:1.4em;font-size:.88rem;color:var(--muted)}
+.anote.err{color:var(--err)}
+.anote a{color:var(--accent)}
+@media (max-width:480px){.actions select{flex:1}}

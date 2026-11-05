@@ -76,7 +76,23 @@
     <div class="actions">
       <button id="dl">Download .txt</button>
       <button id="copy" class="alt">Copy to clipboard</button>
+      <button id="mp3" class="alt">Download MP3 .zip</button>
+      <select id="bitrate" aria-label="MP3 quality">
+        <option value="128">128 kbps</option>
+        <option value="192" selected>192 kbps</option>
+        <option value="256">256 kbps</option>
+        <option value="320">320 kbps</option>
+      </select>
     </div>
+
+    <div id="audio" class="audio">
+      <div class="audio-head">
+        <span id="astatus"></span>
+        <button id="acancel" class="alt small">Cancel</button>
+      </div>
+      <div class="meter"><i id="afill"></i></div>
+    </div>
+    <p id="anote" class="anote" role="status" aria-live="polite"></p>
   </section>
 </main>
 
