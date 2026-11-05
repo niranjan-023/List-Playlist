@@ -6,10 +6,8 @@ main{max-width:720px;margin:0 auto;padding:40px 20px 80px}
 h1{font-size:2.2rem;line-height:1.1;margin:0 0 8px;letter-spacing:-.02em}
 p.lead{margin:0 0 28px;color:var(--muted)}
 label{display:block;font:600 .9rem system-ui,sans-serif;margin:18px 0 6px}
-input[type=text],input[type=password]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:1rem system-ui,sans-serif}
+input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);font:1rem system-ui,sans-serif}
 input:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
-.hint{font:.82rem system-ui,sans-serif;color:var(--muted);margin-top:6px}
-.hint a{color:var(--accent)}
 .row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 button{padding:12px 20px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font:600 1rem system-ui,sans-serif;cursor:pointer}
 button.alt{background:transparent;color:var(--accent)}
