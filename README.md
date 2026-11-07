@@ -1,6 +1,6 @@
 # Playlist to TXT
 
-Paste a YouTube playlist link and download every video title as a `.txt` file. The YouTube API key lives in a `.env` file on the server, so visitors never have to enter one.
+Paste a YouTube playlist link and download every video title as a `.txt` file and download mp3 audio file of every video in the playlist.
 
 ## Features
 
@@ -11,7 +11,6 @@ Paste a YouTube playlist link and download every video title as a `.txt` file. T
 - Optional numbering and video links
 - Download as `.txt` or copy to clipboard
 - **Download all tracks as MP3s in one `.zip`** (128/192/256/320 kbps) with live progress and cancel
-- API key stays on the server, never sent to the browser
 
 ## Project structure
 
